@@ -1,0 +1,23 @@
+{{- if or (eq .Release.Namespace "hw5-test") (eq .Release.Namespace "hw5-prod") }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}-ingress
+  labels:
+    homework: {{ .Values.frontapp.labels.homework }}
+    training: {{ .Values.global.labels.training }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: {{ tpl (printf "{{ .Values.frontapp.host.%s }}" .Release.Namespace | replace "hw5-" "") . }}
+      http:
+        paths:
+          - path: {{ .Values.frontapp.pathPrefix }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}-svc
+                port:
+                  number: {{ .Values.global.ports.port }}
+{{- end }}

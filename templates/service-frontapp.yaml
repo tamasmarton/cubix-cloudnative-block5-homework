@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}-svc
+  labels:
+    homework: {{ .Values.frontapp.labels.homework }}
+    training: {{ .Values.global.labels.training }}
+spec:
+  selector:
+    homework: {{ .Values.frontapp.labels.homework }}
+    training: {{ .Values.global.labels.training }}
+  ports:
+    - name: {{ .Values.global.ports.name }}
+      protocol: {{ .Values.global.ports.protocol }}
+      port: {{ .Values.global.ports.port }}
+      targetPort: {{ .Values.global.ports.targetPort }}
+  type: ClusterIP

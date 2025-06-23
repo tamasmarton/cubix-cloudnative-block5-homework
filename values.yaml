@@ -1,0 +1,35 @@
+global:
+  labels:
+    training: block5
+  ports:
+    name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+frontapp:
+  replicaCount: 1
+  labels:
+    homework: frontapp
+  image:
+    repository: quay.io/drsylent/cubix/block3/homework-frontapp
+    tag: springboot3
+  host:
+    test: other.cubix.localhost
+    prod: application.cubix.localhost
+  pathPrefix: /
+  env:
+    APP_DEFAULT_MESSAGE: frontapp
+    JAVA_OPTS: ""
+  backUrl: http://backapp:8080
+
+backapp:
+  replicaCount: 1
+  labels:
+    homework: backapp
+  image:
+    repository: quay.io/drsylent/cubix/block3/homework-backapp
+    tag: springboot3
+  env:
+    APP_DEFAULT_MESSAGE: backapp
+    JAVA_OPTS: ""

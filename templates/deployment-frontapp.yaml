@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}
+  labels:
+    homework: {{ .Values.frontapp.labels.homework }}
+    training: {{ .Values.global.labels.training }}
+spec:
+  replicas: {{ .Values.frontapp.replicaCount }}
+  selector:
+    matchLabels:
+      homework: {{ .Values.frontapp.labels.homework }}
+      training: {{ .Values.global.labels.training }}
+  template:
+    metadata:
+      labels:
+        homework: {{ .Values.frontapp.labels.homework }}
+        training: {{ .Values.global.labels.training }}
+    spec:
+      containers:
+      - name: {{ .Values.frontapp.labels.homework }}
+        image: "{{ .Values.frontapp.image.repository }}:{{ .Values.frontapp.image.tag }}"
+        env:
+        - name: APP_DEFAULT_MESSAGE
+          value: "{{ .Values.frontapp.env.APP_DEFAULT_MESSAGE }}"
+        - name: JAVA_OPTS
+          value: "{{ .Values.frontapp.env.JAVA_OPTS }}"
+        - name: BACK_URL
+          value: "http://{{ include "hw5-chart.fullname" . }}-{{ .Values.backapp.labels.homework }}-svc:{{ .Values.global.ports.port }}"
+        ports:
+        - name: {{ .Values.global.ports.name }}
+          containerPort: {{ .Values.global.ports.port }}

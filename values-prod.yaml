@@ -1,0 +1,6 @@
+frontapp:
+  replicaCount: 2
+  host:
+    test: application.cubix.localhost
+backapp:
+  replicaCount: 2
