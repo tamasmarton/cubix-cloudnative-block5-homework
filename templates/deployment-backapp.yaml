@@ -21,10 +21,9 @@ spec:
       - name: {{ .Values.backapp.labels.homework }}
         image: "{{ .Values.backapp.image.repository }}:{{ .Values.backapp.image.tag }}"
         env:
-        - name: APP_DEFAULT_MESSAGE
-          value: "{{ .Values.backapp.env.APP_DEFAULT_MESSAGE }}"
-        - name: JAVA_OPTS
-          value: "{{ .Values.backapp.env.JAVA_OPTS }}"
+{{- with .Values.backapp.env }}
+{{ toYaml . | indent 8 }}
+{{- end }}
         ports:
         - name: {{ .Values.global.ports.name }}
-          containerPort: {{ .Values.global.ports.port }}
+          containerPort: {{ .Values.backapp.containerPort }}

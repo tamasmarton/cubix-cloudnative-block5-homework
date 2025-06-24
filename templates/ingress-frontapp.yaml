@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}-ingress
+  name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}
   labels:
     homework: {{ .Values.frontapp.labels.homework }}
     training: {{ .Values.global.labels.training }}
@@ -17,7 +17,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}-svc
+                name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}
                 port:
                   number: {{ .Values.global.ports.port }}
 {{- end }}
