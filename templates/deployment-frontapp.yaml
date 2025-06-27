@@ -21,11 +21,15 @@ spec:
       - name: {{ .Values.frontapp.labels.homework }}
         image: "{{ .Values.frontapp.image.repository }}:{{ .Values.frontapp.image.tag }}"
         env:
+        - name: APP_DEFAULT_MESSAGE
+          value: "{{ .Values.frontapp.appDefaultMessage | default "frontapp" }}"
+        - name: JAVA_OPTS
+          value: "{{ .Values.frontapp.javaOpts | default "" }}"
         - name: BACK_URL
-          value: "http://{{ include "hw5-chart.fullname" . }}-{{ .Values.backapp.labels.homework }}:{{ .Values.global.ports.port }}"
+          value: "http://{{ include "hw5-chart.fullname" . }}-{{ .Values.backapp.labels.homework }}:{{ .Values.frontapp.ports.port }}"
 {{- with .Values.frontapp.env }}
 {{ toYaml . | indent 8 }}
 {{- end }}
         ports:
-        - name: {{ .Values.global.ports.name }}
-          containerPort: {{ .Values.frontapp.containerPort }}
+        - name: {{ .Values.frontapp.ports.name }}
+          containerPort: {{ .Values.frontapp.ports.port }}

@@ -10,8 +10,8 @@ spec:
     homework: {{ .Values.frontapp.labels.homework }}
     training: {{ .Values.global.labels.training }}
   ports:
-    - name: {{ .Values.global.ports.name }}
-      protocol: {{ .Values.global.ports.protocol }}
-      port: {{ .Values.global.ports.port }}
-      targetPort: {{ .Values.global.ports.port }}
+    - name: {{ .Values.frontapp.ports.name }}
+      protocol: {{ .Values.frontapp.ports.protocol }}
+      port: {{ .Values.frontapp.ports.port }}
+      targetPort: {{ .Values.frontapp.ports.port }}
   type: ClusterIP

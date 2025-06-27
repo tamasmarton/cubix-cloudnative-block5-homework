@@ -19,5 +19,5 @@ spec:
               service:
                 name: {{ include "hw5-chart.fullname" . }}-{{ .Values.frontapp.labels.homework }}
                 port:
-                  number: {{ .Values.global.ports.port }}
+                  number: {{ .Values.frontapp.ports.port }}
 {{- end }}
